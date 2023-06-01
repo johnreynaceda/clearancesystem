@@ -1,0 +1,15 @@
+@import '../../vendor/filament/forms/dist/module.esm.css';
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.filament-tables-header-cell button {
+    @apply !text-white;
+}
+
+.filament-tables-table>thead tr {
+    @apply !bg-[#146C94];
+}
