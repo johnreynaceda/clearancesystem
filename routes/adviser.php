@@ -1,6 +1,6 @@
 <?php
     Route::prefix('adviser')
-    ->middleware(['auth'])
+  ->middleware(['auth','adviser'])
     ->group(function () {
         
          Route::get('/dashboard', function () {

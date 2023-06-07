@@ -1,6 +1,6 @@
 <?php
     Route::prefix('subject-teacher')
-    ->middleware(['auth'])
+  ->middleware(['auth','check-user'])
     ->group(function () {
         
          Route::get('/dashboard', function () {

@@ -66,25 +66,29 @@ class StudentClearance extends Component implements Tables\Contracts\HasTable
      public function openRequirement($requirement_id){
         $this->clearance_data = ClearanceRequirement::where('id', $requirement_id)->first();
         $this->clearance_modal = true;
-        if ($this->clearance_data->studentSubmittions->count() < 1) {
-          $this->is_decline = false;
 
-        }elseif ($this->clearance_data->studentSubmittions->where('student_id',
-        auth()->user()->student->id)->first()->remark != null) {
-           $this->is_decline = true;
-           $this->reason = $this->clearance_data->studentSubmittions->where('student_id',
-           auth()->user()->student->id)->first()->remark;
-        }else{
-          $this->is_decline = false;
-        }
-        
-        // dd($this->clearance_data->studentSubmittions->count());
-        // if ($this->clearance_data->studentSubmittions->where('student_id', auth()->user()->student->id)->first()->remark !=
-        // null) {
-        //   $this->is_decline = true;
-        //   $this->reason = $this->clearance_data->studentSubmittions->where('student_id',
-        //   auth()->user()->student->id)->first()->remark;
-        //   # code...
+        if ($this->clearance_data->studentSubmittions->where('student_id',auth()->user()->student->id)->first() == null)
+        {
+          
+          # code...
+        }elseif ($this->clearance_data->studentSubmittions->count() < 1) { // $this->is_decline = false;
+
+            }elseif ($this->clearance_data->studentSubmittions->where('student_id',
+            auth()->user()->student->id)->first()->remark != null) {
+            $this->is_decline = true;
+            $this->reason = $this->clearance_data->studentSubmittions->where('student_id',
+            auth()->user()->student->id)->first()->remark;
+            }else{
+            $this->is_decline = false;
+            }
+        // if ($this->clearance_data->studentSubmittions->count() < 1) {
+        //   $this->is_decline = false;
+
+        // }elseif ($this->clearance_data->studentSubmittions->where('student_id',
+        // auth()->user()->student->id)->first()->remark != null) {
+        //    $this->is_decline = true;
+        //    $this->reason = $this->clearance_data->studentSubmittions->where('student_id',
+        //    auth()->user()->student->id)->first()->remark;
         // }else{
         //   $this->is_decline = false;
         // }
@@ -107,7 +111,7 @@ class StudentClearance extends Component implements Tables\Contracts\HasTable
          UploadedRequirement::create([
          'student_submittion_id' => $submit->id,
          'file_name' => $value->getClientOriginalName(),
-         'path' => $value->storeAs('Uploaded_Requirements', $value->getClientOriginalName())
+         'path' => $value->store('Uploaded_Requirements', 'public'),
          ]);
          }
        }else{

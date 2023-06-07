@@ -32,7 +32,7 @@
                   <h2 class="text-base font-semibold leading-6 text-gray-900" id="slide-over-title">Student Submittion
                   </h2>
                   <div class="ml-3 flex h-7 items-center">
-                    <button type="button"
+                    <button type="button" wire:click="$set('submittion_modal', false)"
                       class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                       <span class="sr-only">Close panel</span>
                       <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -87,8 +87,11 @@
                             </div>
                           </div>
                           <div class="ml-4 flex-shrink-0">
-                            <button wire:click="downloadFile({{ $item->id }})"
-                              class="font-medium text-indigo-600 hover:text-indigo-500">Download</button>
+                            <a href="{{Storage::url($item->path)}}"
+                                target="_blank"
+                              class="font-medium text-indigo-600 hover:text-indigo-500">View</a>
+                            {{-- <button wire:click="downloadFile({{ $item->id }})"
+                              class="font-medium text-indigo-600 hover:text-indigo-500">Download</button> --}}
                           </div>
                         </li>
                       @endforeach

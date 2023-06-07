@@ -8,7 +8,7 @@
         </div>
         <p class="mt-1 truncate text-sm text-gray-600">Created Date: {{$getRecord()->created_at->format('F m, Y')}}</p>
         <p class="text-sm">status:
-       @if ($getRecord()->studentSubmittions->count() < 1)
+       {{-- @if ($getRecord()->studentSubmittions->count() < 1)
          <span class="inline-flex items-center rounded-full bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">No Submittion</span>
          @elseif ($getRecord()->studentSubmittions->where('student_id', auth()->user()->student->id)->first()->status == 3)
          <span class="inline-flex items-center rounded-full bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">Declined</span>
@@ -16,7 +16,18 @@
           <span class="inline-flex items-center rounded-full bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">Accepted</span>
          @else
          <span class="inline-flex items-center rounded-full bg-gray-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">Pending</span>
-       @endif
+       @endif --}}
+
+      @if ($getRecord()->studentSubmittions->where('student_id', auth()->user()->student->id)->first() == null)
+            <span class="inline-flex items-center rounded-full bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">No Submittion</span>
+       @elseif ($getRecord()->studentSubmittions->where('student_id', auth()->user()->student->id)->first()->status == 3)
+         <span class="inline-flex items-center rounded-full bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">Declined</span>
+          @elseif ($getRecord()->studentSubmittions->where('student_id', auth()->user()->student->id)->first()->status == 2)
+          <span class="inline-flex items-center rounded-full bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">Accepted</span>
+         @else
+         <span class="inline-flex items-center rounded-full bg-gray-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">Pending</span>     
+      @endif
+
         </p>
    {{-- @if ($getRecord()->studentSubmittions->where('student_id', auth()->user()->student->id)->first()->remark != null)
          <p class="mt-1 truncate text-sm text-red-600">Status: Declined</p>
