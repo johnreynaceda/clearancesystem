@@ -33,4 +33,9 @@
       return view('admin.teacher');
       })->name('admin.teacher');
 
+      //reports
+       Route::get('/reports', function () {
+       return view('admin.reports');
+       })->name('admin.reports');
+
     });

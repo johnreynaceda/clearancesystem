@@ -75,7 +75,7 @@
               x-transition:leave-end="transform opacity-0 scale-95" style="display: none"
               class="absolute right-5 z-10 w-48 py-1 -bottom-32 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
               role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-              <a href="#" class="block px-4 py-2 text-sm text-gray-500" role="menuitem" tabindex="-1"
+              <a href="/profile" class="block px-4 py-2 text-sm text-gray-500" role="menuitem" tabindex="-1"
                 id="user-menu-item-0">
                 Your Profile
               </a>

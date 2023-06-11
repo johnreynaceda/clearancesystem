@@ -24,5 +24,13 @@ class Student extends Model
      public function subjectTeacherAdvisee(){
      return $this->belongsToMany(SubjectTeacherAdvisee::class);
      }
+
+     public function strand(){
+        return $this->belongsTo(Strand::class);
+     }
+     
+     public function gradeLevel(){
+        return $this->belongsTo(GradeLevel::class);
+     }
     
 }

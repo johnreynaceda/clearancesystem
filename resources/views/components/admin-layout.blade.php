@@ -147,7 +147,7 @@
               </p>
               <ul class="px-2">
                 <li>
-                  <a class="{{ request()->routeIs('admin.users') ? 'bg-gray-100 text-[#146C94] fill-[#146C94] font-bold' : '' }} inline-flex items-center w-full px-4 py-2  mt-1 text-sm text-white fill-white transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-100 hover:scale-95 hover:text-[#146C94] hover:fill-[#146C94] hover:font-bold"
+                  <a class="{{ request()->routeIs('admin.users') ? 'bg-gray-100 text-[#146C94] fill-[#146C94] font-bold' : 'fill-white text-white' }} inline-flex items-center w-full px-4 py-2  mt-1 text-sm transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-100 hover:scale-95 hover:text-[#146C94] hover:fill-[#146C94] hover:font-bold"
                     href="{{ route('admin.users') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24">
                       <path
@@ -186,6 +186,21 @@
                   </a>
                 </li>
               </ul>
+                <p class="px-4 pt-4 text-xs font-semibold text-gray-300 uppercase">
+                REPORTS
+              </p>
+                <ul class="px-2">
+                <li>
+                  <a class="{{ request()->routeIs('admin.reports') ? 'bg-gray-100 text-[#146C94] fill-[#146C94] font-bold' : 'fill-white text-white' }} inline-flex items-center w-full px-4 py-2  mt-1 text-sm transition duration-200 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-100 hover:scale-95 hover:text-[#146C94] hover:fill-[#146C94] hover:font-bold"
+                    href="{{ route('admin.reports') }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"><path d="M21 8V20.9932C21 21.5501 20.5552 22 20.0066 22H3.9934C3.44495 22 3 21.556 3 21.0082V2.9918C3 2.45531 3.4487 2 4.00221 2H14.9968L21 8ZM19 9H14V4H5V20H19V9ZM8 7H11V9H8V7ZM8 11H16V13H8V11ZM8 15H16V17H8V15Z"></path></svg>
+                    <span class="ml-2">
+                      Reports
+                    </span>
+                  </a>
+                </li>
+             
+              </ul>
             </nav>
           </div>
           <div class="flex flex-shrink-0 p-4 px-4 bg-[#AFD3E2]">
@@ -196,7 +211,7 @@
                   <span class="flex-shrink-0 block group">
                     <div class="flex items-center">
                       <div>
-                        <img class="inline-block object-cover rounded-full h-9 w-9"
+                        <img class="flex flex-shrink object-cover rounded-full h-9 w-9"
                           src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80"
                           alt="">
                       </div>

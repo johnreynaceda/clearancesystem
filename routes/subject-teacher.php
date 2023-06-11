@@ -1,6 +1,6 @@
 <?php
     Route::prefix('subject-teacher')
-  ->middleware(['auth','check-user'])
+  ->middleware(['auth','subject-teacher'])
     ->group(function () {
         
          Route::get('/dashboard', function () {
@@ -12,4 +12,7 @@
        Route::get('/manage-clearance/{id}', function () {
        return view('adviser.manage.clearance');
        })->name('subject-teacher.manage.clearance');
+        Route::get('/profile', function () {
+        return view('profile.edit');
+        })->name('subject-teacher.profile');
     });

@@ -89,12 +89,14 @@ class ManageClearance extends Component implements Tables\Contracts\HasTable
         $data->update([
             'status' => 2,
         ]);
-          $this->alert('success', 'Adviser Assigned Successfully', [
+          $this->alert('success', 'Accept requirements successfully', [
           'position' => 'center',
           'timer' => 3000,
           'toast' => false,
           'timerProgressBar' => true,
           ]);
+
+          $this->submittion_modal = false;
     }
 
     public function declineSubmittion($id){

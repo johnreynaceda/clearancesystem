@@ -14,4 +14,11 @@ class TeacherDesignation extends Model
     public function teacher(){
       return  $this->belongsTo(Teacher::class);
     }
+    public function strand(){
+      return $this->belongsTo(Strand::class);
+    }
+
+    public function subject(){
+      return $this->belongsTo(Subject::class);
+    }
 }
