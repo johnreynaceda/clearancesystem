@@ -31,6 +31,24 @@ class TeacherList extends Component implements Tables\Contracts\HasTable
     use Tables\Concerns\InteractsWithTable;
      use LivewireAlert;
 
+     public $create_modal = false;
+      public $firstname, $middlename, $lastname, $birthdate, $age, $address, $contact_number, $grade_level_id,
+      $strand_id;
+
+      public function updatedBirthdate(){
+      $this->age = \Carbon\Carbon::parse($this->birthdate)->age;
+      if ($this->age == 0) {
+      $this->alert('error', 'Age must not be 0', [
+      'position' => 'center',
+      'timer' => 3000,
+      'toast' => false,
+      'timerProgressBar' => true,
+      ]);
+      $this->birthdate == null;
+      $this->age == null;
+      }
+      }
+
     protected function getTableQuery(): Builder
     {
     return Teacher::query();
@@ -59,39 +77,91 @@ class TeacherList extends Component implements Tables\Contracts\HasTable
     protected function getTableHeaderActions()
     {
     return [
-    Action::make('student')->label('New Teacher')->button()->icon('heroicon-o-plus')->size('sm')->color('gray')
-    ->action(function ($record,$data): void {
-   
-        DB::beginTransaction();
-        Teacher::create([
-            'firstname' => $data['firstname'],
-            'middlename' => $data['middlename'],
-            'lastname' => $data['lastname'],
-            'birthdate' => $data['birthdate'],
-            'address' => $data['address'],
-            'contact_number' => $data['contact_number'],
-        ]);
-        DB::commit();
-
-
-
-    })
-    ->form([
-    Fieldset::make('Student Information')
-    ->schema([
-    TextInput::make('firstname')->label('First Name')->required(),
-    TextInput::make('middlename')->label('Middle Name')->required(),
-    TextInput::make('lastname')->label('Last Name')->required(),
-    DatePicker::make('birthdate')->label('Date of Birth')->required(),
-    TextInput::make('address')->label('Address')->required(),
-    TextInput::make('contact_number')->label('Contact Number')->required(),
-    ])
-    ->columns(3),
-    ])->modalWidth('3xl'),
+    Action::make('student')->label('New Teacher')->button()->icon('heroicon-o-plus')->size('sm')->color('gray')->action(function(){
+        $this->create_modal = true;
+      })
+    // ->form([
+    // Fieldset::make('Student Information')
+    // ->schema([
+    // TextInput::make('firstname')->label('First Name')->required(),
+    // TextInput::make('middlename')->label('Middle Name')->required(),
+    // TextInput::make('lastname')->label('Last Name')->required(),
+    // DatePicker::make('birthdate')->label('Date of Birth')->required(),
+    // TextInput::make('address')->label('Address')->required(),
+    // TextInput::make('contact_number')->label('Contact Number')->required(),
+    // ])
+    // ->columns(3),
+    // ])->modalWidth('3xl'),
 
     ];
 
     }
+
+     protected function getFormSchema(): array
+     {
+     return [
+      Fieldset::make('Student Information')
+      ->schema([
+      TextInput::make('firstname')->label('First Name')->required(),
+      TextInput::make('middlename')->label('Middle Name')->required(),
+      TextInput::make('lastname')->label('Last Name')->required(),
+      DatePicker::make('birthdate')->label('Date of Birth')->required()->reactive(),
+      TextInput::make('address')->label('Address')->required(),
+      TextInput::make('contact_number')->label('Contact Number')->required(),
+      ])
+      ->columns(3),
+     ];
+     }
+
+       public function createTeacher(){
+
+
+
+       if ($this->age != 0) {
+       $name = strtolower($this->firstname.' '.$this->lastname);
+       // // dd($name);
+       DB::beginTransaction();
+       $user = User::create([
+       'name' => $this->firstname. ' ' . $this->lastname,
+       'email' => $name.'@gmail.com',
+       'password' => bcrypt('password'),
+       'role_id' => 4,
+       ]);
+
+       Teacher::create([
+       'user_id' => $user->id,
+       'firstname' => $this->firstname,
+       'middlename' => $this->middlename,
+       'lastname' => $this->lastname,
+       'birthdate' => $this->birthdate,
+     
+       'address' => $this->address,
+       'contact_number' => $this->contact_number,
+      
+       ]);
+       DB::commit();
+       $this->alert('success', 'Teacher Created', [
+       'position' => 'center',
+       'timer' => 3000,
+       'toast' => false,
+       'timerProgressBar' => true,
+       ]);
+       $this->create_modal = false;
+       $this->reset('firstname','middlename', 'lastname', 'birthdate',
+       'age','address','contact_number','grade_level_id', 'strand_id');
+       }else{
+       $this->alert('error', 'Age must not be 0', [
+       'position' => 'center',
+       'timer' => 3000,
+       'toast' => false,
+       'timerProgressBar' => true,
+       ]);
+       }
+
+
+       }
+
+
 
      protected function getTableActions(): array
      {
