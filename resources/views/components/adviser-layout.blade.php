@@ -48,10 +48,17 @@
             </div>
             <nav :class="{ 'flex': open, 'hidden': !open }"
                 class="flex-col items-center flex-grow hidden md:pb-0 md:flex md:justify-end md:flex-row">
-                <a class="px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 font-medium hover:text-blue-600 lg:ml-auto"
-                    href="{{ route('adviser.student') }}">
-                    Manage Student
-                </a>
+                @if (auth()->user()->role_id == 2)
+                    <a class="px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 font-medium hover:text-blue-600 lg:ml-auto"
+                        href="{{ route('adviser.student') }}">
+                        Manage Student
+                    </a>
+                @else
+                    <a class="px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 font-medium hover:text-blue-600 lg:ml-auto"
+                        href="{{ route('subject-teacher.student') }}">
+                        Manage Student
+                    </a>
+                @endif
                 <a class="px-2 py-2 text-sm text-gray-500 lg:px-6 md:px-3 font-medium hover:text-blue-600"
                     href="#">
                     Settings
