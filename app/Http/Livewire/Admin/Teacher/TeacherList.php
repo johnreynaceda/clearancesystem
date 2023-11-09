@@ -38,8 +38,10 @@ class TeacherList extends Component implements Tables\Contracts\HasTable
     public function updatedBirthdate()
     {
         $this->age = \Carbon\Carbon::parse($this->birthdate)->age;
-        if ($this->age == 0) {
-            $this->alert('error', 'Age must not be 0', [
+        if ($this->age >= 16) {
+
+        } else {
+            $this->alert('error', 'Age must be 16 or above', [
                 'position' => 'center',
                 'timer' => 3000,
                 'toast' => false,
@@ -119,7 +121,7 @@ class TeacherList extends Component implements Tables\Contracts\HasTable
 
 
 
-        if ($this->age != 0) {
+        if ($this->age >= 16) {
             $name = strtolower($this->firstname . '' . $this->lastname);
             // // dd($name);
             DB::beginTransaction();
@@ -161,7 +163,7 @@ class TeacherList extends Component implements Tables\Contracts\HasTable
                 'strand_id'
             );
         } else {
-            $this->alert('error', 'Age must not be 0', [
+            $this->alert('error', 'Age must be 16 or above', [
                 'position' => 'center',
                 'timer' => 3000,
                 'toast' => false,
