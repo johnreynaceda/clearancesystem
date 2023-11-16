@@ -21,65 +21,67 @@ class ManageStudent extends Component implements Tables\Contracts\HasTable
 {
     use Tables\Concerns\InteractsWithTable;
 
-     protected function getTableQuery(): Builder
-     {
+    protected function getTableQuery(): Builder
+    {
         if (auth()->user()->teacher->teacherDesignations->first()->assigned_as == 'Adviser') {
-                 return TeacherAdvisee::query()->where('teacher_id', auth()->user()->teacher->id);
-        }else{
+            return TeacherAdvisee::query()->where('teacher_id', auth()->user()->teacher->id);
+        } else {
             return SubjectTeacherAdvisee::query()->where('teacher_id', auth()->user()->teacher->id);
         }
-     }
+    }
 
-     protected function getTableColumns(): array
-     {
-     return [
-     TextColumn::make('students.firstname')->label('FIRSTNAME')->sortable()->searchable(),
-     TextColumn::make('students.lastname')->label('LASTNAME')->sortable()->searchable(),
-    
-     ];
-     }
+    protected function getTableColumns(): array
+    {
+        return [
+            TextColumn::make('students.firstname')->label('FIRSTNAME')->sortable()->searchable(),
+            TextColumn::make('students.middlename')->label('MIDDLENAME')->sortable()->searchable(),
+            TextColumn::make('students.lastname')->label('LASTNAME')->sortable()->searchable(),
 
-     protected function getTableHeaderActions()
-     {
-     return [
-     Action::make('student')->label('Add Student')->button()->icon('heroicon-o-user-add')->size('sm')->color('gray')
-     ->action(function ($record, $data): void {
-       foreach ($data as $value) {
-        foreach ($value as $item) {
+        ];
+    }
 
-            if (auth()->user()->teacher->teacherDesignations->first()->assigned_as == 'Adviser') {
-                  TeacherAdvisee::create([
-                  'teacher_id' => auth()->user()->teacher->id,
-                  'student_id' => $item,
-                  ]);
-            }else{
-                SubjectTeacherAdvisee::create([
-                    'teacher_id' => auth()->user()->teacher->id,
-                    'student_id' => $item,
-                    ]);
-            }
-          
-        }
-       }
-     })
-     ->form([
+    protected function getTableHeaderActions()
+    {
+        return [
+            Action::make('student')->label('Add Student')->button()->icon('heroicon-o-user-add')->size('sm')->color('gray')
+                ->action(function ($record, $data): void {
+                    foreach ($data as $value) {
+                        foreach ($value as $item) {
 
-     Grid::make(1)
-     ->schema([
-     Select::make('student')->multiple()->searchable()
-     ->options(Student::get()->mapWithKeys(
-        function($student){
-            return [
-                $student->id => $student->firstname. ' ' . $student->lastname,
-            ];
-        }
-     ))
-     ])
-     ])
+                            if (auth()->user()->teacher->teacherDesignations->first()->assigned_as == 'Adviser') {
+                                TeacherAdvisee::create([
+                                    'teacher_id' => auth()->user()->teacher->id,
+                                    'student_id' => $item,
+                                ]);
+                            } else {
+                                SubjectTeacherAdvisee::create([
+                                    'teacher_id' => auth()->user()->teacher->id,
+                                    'student_id' => $item,
+                                ]);
+                            }
 
-     ];
+                        }
+                    }
+                })
+                ->form([
 
-     }
+                    Grid::make(1)
+                        ->schema([
+                            Select::make('student')->multiple()->searchable()
+                                ->options(Student::get()->mapWithKeys(
+                                    function ($student) {
+                                        return [
+                                            $student->id => $student->firstname . ' ' . $student->lastname,
+                                        ];
+                                    }
+                                )
+                                )
+                        ])
+                ])
+
+        ];
+
+    }
 
 
     public function render()

@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Role;
 use App\Models\User;
+
 class AccountSeeder extends Seeder
 {
     /**
@@ -22,28 +23,28 @@ class AccountSeeder extends Seeder
         ]);
 
         $role = Role::create(['name' => 'Adviser']);
-        User::create([
-            'name' => 'Adviser',
-            'email' => 'adviser@gmail.com',
-            'password' => bcrypt('password'),
-            'role_id' => $role->id
-        ]);
+        // User::create([
+        //     'name' => 'Adviser',
+        //     'email' => 'adviser@gmail.com',
+        //     'password' => bcrypt('password'),
+        //     'role_id' => $role->id
+        // ]);
 
         $role = Role::create(['name' => 'Subject Teacher']);
-        User::create([
-            'name' => 'Subject Teacher',
-            'email' => 'teacher@gmail.com',
-            'password' => bcrypt('password'),
-            'role_id' => $role->id
-        ]);
+        // User::create([
+        //     'name' => 'Subject Teacher',
+        //     'email' => 'teacher@gmail.com',
+        //     'password' => bcrypt('password'),
+        //     'role_id' => $role->id
+        // ]);
 
         $role = Role::create(['name' => 'Student']);
-        User::create([
-            'name' => 'Student',
-            'email' => 'student@gmail.com',
-            'password' => bcrypt('password'),
-            'role_id' => $role->id
-        ]);
-        
+        // User::create([
+        //     'name' => 'Student',
+        //     'email' => 'student@gmail.com',
+        //     'password' => bcrypt('password'),
+        //     'role_id' => $role->id
+        // ]);
+
     }
 }

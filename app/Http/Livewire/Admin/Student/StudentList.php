@@ -20,6 +20,7 @@ use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\DatePicker;
 use DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Filament\Forms\Components\FileUpload;
 
 
 class StudentList extends Component implements Tables\Contracts\HasTable
@@ -28,7 +29,7 @@ class StudentList extends Component implements Tables\Contracts\HasTable
     use LivewireAlert;
     public $create_modal = false;
     public $firstname, $middlename, $lastname, $birthdate, $age, $address, $contact_number, $grade_level_id, $strand_id;
-
+    public $attachment;
     public function updatedBirthdate()
     {
         $this->age = \Carbon\Carbon::parse($this->birthdate)->age;
@@ -85,7 +86,8 @@ class StudentList extends Component implements Tables\Contracts\HasTable
                     Select::make('strand_id')->label('Strand')
                         ->options(Strand::pluck('name', 'id')),
                 ])
-                ->columns(2)
+                ->columns(2),
+            FileUpload::make('attachment')->label('Student Profile')
         ];
     }
 
@@ -96,64 +98,12 @@ class StudentList extends Component implements Tables\Contracts\HasTable
             Action::make('student')->label('New Student')->button()->icon('heroicon-o-plus')->size('sm')->color('gray')->action(function () {
                 $this->create_modal = true;
             })
-            // ->action(function ($record,$data): void {
-            //  $name = strtolower($data['firstname'].''.$data['lastname']);
-            //       // dd($name);
-            //      DB::beginTransaction();
-            //       $user = User::create([
-            //       'name' => $data['firstname']. '' . $data['lastname'],
-            //       'email' => $name.'@gmail.com',
-            //       'password' => bcrypt('password'),
-            //       'role_id' => 4,
-            //       ]);
-
-            //       Student::create([
-            //           'user_id' => $user->id,
-            //        'firstname' => $data['firstname'],
-            //       'middlename' => $data['middlename'],
-            //       'lastname' => $data['lastname'],
-            //       'birthdate' => $data['birthdate'],
-            //       'age' => $data['age'],
-            //       'address' => $data['address'],
-            //       'contact_number' => $data['contact_number'],
-            //       'grade_level_id' => $data['grade_level_id'],
-            //       'strand_id' => $data['strand_id']
-            //       ]);
-            //      DB::commit();
-
-
-
-            // })
-            // ->form([
-            //      Fieldset::make('Student Information')
-            //      ->schema([
-            //      TextInput::make('firstname')->label('First Name')->required(),
-            //      TextInput::make('middlename')->label('Middle Name')->required(),
-            //      TextInput::make('lastname')->label('Last Name')->required(),
-            //      DatePicker::make('birthdate')->label('Date of Birth')->required()->reactive(),
-            //      TextInput::make('age')->label('Age')->required()->reactive(),
-            //      TextInput::make('address')->label('Address')->required(),
-            //      TextInput::make('contact_number')->label('Contact Number')->required(),
-            //      ])
-            //      ->columns(3),
-            //      Fieldset::make('Grade Level & Strand')
-            //      ->schema([
-            //      Select::make('grade_level_id')->label('Grade Level')
-            //      ->options(GradeLevel::pluck('name', 'id')),
-            //      Select::make('strand_id')->label('Strand')
-            //      ->options(Strand::pluck('name', 'id')),
-            //      ])
-            //      ->columns(2)
-            // ])->modalWidth('3xl')
         ];
 
     }
 
     public function createStudent()
     {
-
-
-
         if ($this->age >= 16) {
             $name = strtolower($this->firstname . '' . $this->lastname);
             DB::beginTransaction();
@@ -164,18 +114,36 @@ class StudentList extends Component implements Tables\Contracts\HasTable
                 'role_id' => 4,
             ]);
 
-            Student::create([
-                'user_id' => $user->id,
-                'firstname' => $this->firstname,
-                'middlename' => $this->middlename,
-                'lastname' => $this->lastname,
-                'birthdate' => $this->birthdate,
-                'age' => $this->age,
-                'address' => $this->address,
-                'contact_number' => $this->contact_number,
-                'grade_level_id' => $this->grade_level_id,
-                'strand_id' => $this->strand_id
-            ]);
+            if ($this->attachment) {
+                foreach ($this->attachment as $key => $value) {
+                    Student::create([
+                        'user_id' => $user->id,
+                        'firstname' => $this->firstname,
+                        'middlename' => $this->middlename,
+                        'lastname' => $this->lastname,
+                        'birthdate' => $this->birthdate,
+                        'age' => $this->age,
+                        'address' => $this->address,
+                        'contact_number' => $this->contact_number,
+                        'grade_level_id' => $this->grade_level_id,
+                        'strand_id' => $this->strand_id,
+                        'student_profile' => $value->store('Student Profile', 'public'),
+                    ]);
+                }
+            } else {
+                Student::create([
+                    'user_id' => $user->id,
+                    'firstname' => $this->firstname,
+                    'middlename' => $this->middlename,
+                    'lastname' => $this->lastname,
+                    'birthdate' => $this->birthdate,
+                    'age' => $this->age,
+                    'address' => $this->address,
+                    'contact_number' => $this->contact_number,
+                    'grade_level_id' => $this->grade_level_id,
+                    'strand_id' => $this->strand_id,
+                ]);
+            }
             DB::commit();
             $this->alert('success', 'Student Created', [
                 'position' => 'center',

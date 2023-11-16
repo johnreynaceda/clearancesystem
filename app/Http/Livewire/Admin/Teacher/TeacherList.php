@@ -123,7 +123,6 @@ class TeacherList extends Component implements Tables\Contracts\HasTable
 
         if ($this->age >= 16) {
             $name = strtolower($this->firstname . '' . $this->lastname);
-            // // dd($name);
             DB::beginTransaction();
             $user = User::create([
                 'name' => $this->firstname . ' ' . $this->lastname,
@@ -267,7 +266,6 @@ class TeacherList extends Component implements Tables\Contracts\HasTable
                                         ->options(Subject::pluck('name', 'id'))
                                 ])
                         ])->modalWidth('xl'),
-                // Action::make('manage-advisee')->label('Manage Advisee')->color('primary')->icon('heroicon-o-user-group'),
             ]),
         ];
 
