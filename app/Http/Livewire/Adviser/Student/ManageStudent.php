@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Adviser\Student;
 
+use App\Models\GradeLevel;
 use Livewire\Component;
 use Filament\Tables;
 use Illuminate\Contracts\View\View;
@@ -33,9 +34,15 @@ class ManageStudent extends Component implements Tables\Contracts\HasTable
     protected function getTableColumns(): array
     {
         return [
+            TextColumn::make('students.lastname')->label('LASTNAME')->sortable()->searchable(),
             TextColumn::make('students.firstname')->label('FIRSTNAME')->sortable()->searchable(),
             TextColumn::make('students.middlename')->label('MIDDLENAME')->sortable()->searchable(),
-            TextColumn::make('students.lastname')->label('LASTNAME')->sortable()->searchable(),
+            TextColumn::make('students.grade_level_id')->label('GRADE LEVEL')->formatStateUsing(
+                function ($record) {
+                    return GradeLevel::where('id', $record->students->first()->grade_level_id)->first()->name;
+                }
+            ),
+
 
         ];
     }
@@ -68,13 +75,14 @@ class ManageStudent extends Component implements Tables\Contracts\HasTable
                     Grid::make(1)
                         ->schema([
                             Select::make('student')->multiple()->searchable()
-                                ->options(Student::get()->mapWithKeys(
-                                    function ($student) {
-                                        return [
-                                            $student->id => $student->firstname . ' ' . $student->lastname,
-                                        ];
-                                    }
-                                )
+                                ->options(
+                                    Student::get()->mapWithKeys(
+                                        function ($student) {
+                                            return [
+                                                $student->id => $student->firstname . ' ' . $student->lastname,
+                                            ];
+                                        }
+                                    )
                                 )
                         ])
                 ])
