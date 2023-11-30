@@ -8,6 +8,7 @@
                 </path>
             </svg>
             <div class="mt-3">
+
                 <div class="flex items-center gap-x-2">
                     <p class="text-xs uppercase tracking-wide font-medium text-gray-600">
                         Total Submitted
@@ -28,14 +29,25 @@
                     </h3>
                     <div class="grid grid-cols-2 divide-x gap-2">
                         <div class="flex items-center justify-center">
-                            <a href="{{ route('subject-teacher.manage.clearance', ['id' => $getRecord()->id, 'name' => $getRecord()->title]) }}"
-                                class="hover:fill-green-600 fill-gray-600 cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4">
-                                    <path
-                                        d="M10 6V8H5V19H16V14H18V20C18 20.5523 17.5523 21 17 21H4C3.44772 21 3 20.5523 3 20V7C3 6.44772 3.44772 6 4 6H10ZM21 3V12L17.206 8.207L11.2071 14.2071L9.79289 12.7929L15.792 6.793L12 3H21Z">
-                                    </path>
-                                </svg>
-                            </a>
+                            @if (auth()->user()->role_id == 2)
+                                <a href="{{ route('adviser.manage.clearance', ['id' => $getRecord()->id, 'name' => $getRecord()->title]) }}"
+                                    class="hover:fill-green-600 fill-gray-600 cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4">
+                                        <path
+                                            d="M10 6V8H5V19H16V14H18V20C18 20.5523 17.5523 21 17 21H4C3.44772 21 3 20.5523 3 20V7C3 6.44772 3.44772 6 4 6H10ZM21 3V12L17.206 8.207L11.2071 14.2071L9.79289 12.7929L15.792 6.793L12 3H21Z">
+                                        </path>
+                                    </svg>
+                                </a>
+                            @else
+                                <a href="{{ route('subject-teacher.manage.clearance', ['id' => $getRecord()->id, 'name' => $getRecord()->title]) }}"
+                                    class="hover:fill-green-600 fill-gray-600 cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4">
+                                        <path
+                                            d="M10 6V8H5V19H16V14H18V20C18 20.5523 17.5523 21 17 21H4C3.44772 21 3 20.5523 3 20V7C3 6.44772 3.44772 6 4 6H10ZM21 3V12L17.206 8.207L11.2071 14.2071L9.79289 12.7929L15.792 6.793L12 3H21Z">
+                                        </path>
+                                    </svg>
+                                </a>
+                            @endif
                         </div>
                         <div class="flex pl-2 items-center justify-center ">
                             <button class="fill-red-600 hover:fill-gray-600"><svg xmlns="http://www.w3.org/2000/svg"
